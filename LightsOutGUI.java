@@ -1,24 +1,11 @@
 
-// ***** DO NOT USE, CHANGE OR TRY TO UNDERSTAND THE CODE BELOW ***** //
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-/**
- * This class contains the front-end (GUI) for the game Lights Out.
- *
- * @author John Doe
- * @version 1.3, 11/28/21
- * @see <a href="https://en.wikipedia.org/wiki/Lights_Out_%28game%29">Lights Out (game)</a>
- */
 public final class LightsOutGUI {
-	/**
-	 * Let the games begin (here)!
-	 *
-	 * @param args optional command line arguments, denoting the size of the game grid (2 <= rows, cols <= 42) and the densities of lights and blinds (0 <= light, mask < 1)
-	 */
+
 	public static void main(String[] args) {
 		new LightsOutInner(args);
 	}
@@ -137,10 +124,12 @@ public final class LightsOutGUI {
 			GridBagLayout gridBagLayout = new GridBagLayout();
 			getContentPane().setLayout(gridBagLayout);
 			GridBagConstraints gridBagConstraints;
-			gridBagConstraints = new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.NORTH, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
+			gridBagConstraints = new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.NORTH,
+					GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
 			gridBagLayout.setConstraints(controlPanel, gridBagConstraints);
 			getContentPane().add(controlPanel);
-			gridBagConstraints = new GridBagConstraints(0, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
+			gridBagConstraints = new GridBagConstraints(0, 1, 1, 1, 1, 1, GridBagConstraints.CENTER,
+					GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0);
 			gridBagLayout.setConstraints(matrixPanel, gridBagConstraints);
 			getContentPane().add(matrixPanel);
 		}
@@ -212,7 +201,9 @@ public final class LightsOutGUI {
 							lightsOut.toggle(r, c);
 							paintMatrix();
 							if (lightsOut.getState() == 0) {
-								JOptionPane.showMessageDialog(this, "Congratulations!\nYou solved this puzzle.\nTry another one...", "GAME OVER", JOptionPane.INFORMATION_MESSAGE);
+								JOptionPane.showMessageDialog(this,
+										"Congratulations!\nYou solved this puzzle.\nTry another one...", "GAME OVER",
+										JOptionPane.INFORMATION_MESSAGE);
 								startNewGame();
 							}
 							return;
@@ -225,14 +216,16 @@ public final class LightsOutGUI {
 		@Override
 		public void run() {
 			if (lightsOut.getState() == 0) {
-				JOptionPane.showMessageDialog(this, "Nothing to do here.\nTry another one...", "GAME OVER", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Nothing to do here.\nTry another one...", "GAME OVER",
+						JOptionPane.WARNING_MESSAGE);
 				startNewGame();
 				return;
 			}
 			IntegerSequenceMemory solution = lightsOut.solve();
 			Integer[] moves = solution == null ? null : solution.recallAll();
 			if (moves == null || moves.length == 0) {
-				JOptionPane.showMessageDialog(this, "Sorry, there is no solution for this puzzle.\nTry another one...", "GAME OVER", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Sorry, there is no solution for this puzzle.\nTry another one...",
+						"GAME OVER", JOptionPane.ERROR_MESSAGE);
 				startNewGame();
 				return;
 			} else if (showAll) {
